@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ movie.title }} ({{ movie.year }}) - Movie Collection{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4">
+            {% if movie.poster %}
+                <img src="{{ movie.poster }}" class="img-fluid rounded shadow movie-detail-poster" 
+                     alt="{{ movie.title }}">
+            {% else %}
+                <div class="bg-light rounded shadow d-flex align-items-center justify-content-center movie-detail-poster">
+                    <span class="text-muted" style="font-size: 4rem;">🎬</span>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <h1 class="h2">{{ movie.title }}</h1>
+                <span class="badge bg-primary fs-6">{{ movie.year }}</span>
+            </div>
+
+            <div class="row mb-4">
+                {% if movie.studio %}
+                    <div class="col-sm-6 mb-3">
+                        <h5>Studio</h5>
+                        <a href="{{ path('app_studio_show', {'id': movie.studio.id}) }}" 
+                           class="text-decoration-none">
+                            <div class="d-flex align-items-center">
+                                {% if movie.studio.logo %}
+                                    <img src="{{ movie.studio.logo }}" alt="{{ movie.studio.name }}" 
+                                         class="me-2" style="height: 30px;">
+                                {% endif %}
+                                <span>{{ movie.studio.name }}</span>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if movie.director %}
+                    <div class="col-sm-6 mb-3">
+                        <h5>Réalisateur</h5>
+                        <a href="{{ path('app_director_show', {'id': movie.director.id}) }}" 
+                           class="text-decoration-none">
+                            {{ movie.director.fullName }}
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if movie.actors|length > 0 %}
+                <div class="mb-4">
+                    <h5>Acteurs</h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for actor in movie.actors %}
+                            <a href="{{ path('app_actor_show', {'id': actor.id}) }}" 
+                               class="badge bg-secondary text-decoration-none fs-6">
+                                {{ actor.fullName }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if movie.tags|length > 0 %}
+                <div class="mb-4">
+                    <h5>Tags</h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for tag in movie.tags %}
+                            <span class="badge fs-6" style="background-color: {{ tag.color }};">
+                                {{ tag.name }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row text-muted small">
+                <div class="col-sm-6">
+                    <strong>Ajouté le :</strong> {{ movie.addedAt|date('d/m/Y à H:i') }}
+                </div>
+                <div class="col-sm-6">
+                    <strong>Mis à jour :</strong> {{ movie.updatedAt|date('d/m/Y à H:i') }}
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="{{ path('app_home') }}" class="btn btn-secondary">
+                    ← Retour à la liste
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

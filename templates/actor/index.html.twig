@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acteurs - Movie Collection{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2">Acteurs</h1>
+        <small class="text-muted">{{ pagination.getTotalItemCount }} acteurs</small>
+    </div>
+
+    {% if pagination.getTotalItemCount > 0 %}
+        <div class="row g-3">
+            {% for actor in pagination %}
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card actor-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="actor-avatar me-3">
+                                    <span class="fs-4">🎭</span>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h5 class="card-title mb-1">{{ actor.fullName }}</h5>
+                                    <p class="card-text text-muted small mb-0">
+                                        {{ actor.movies|length }} film{% if actor.movies|length > 1 %}s{% endif %}
+                                    </p>
+                                </div>
+                                <div>
+                                    <a href="{{ path('app_actor_show', {'id': actor.id}) }}" 
+                                       class="btn btn-outline-primary btn-sm">
+                                        Voir
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <h3 class="text-muted">Aucun acteur trouvé</h3>
+        </div>
+    {% endif %}
+{% endblock %}
