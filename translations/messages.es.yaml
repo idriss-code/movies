@@ -1,0 +1,74 @@
+# Spanish translations
+nav:
+  brand: "Mi Colección de Películas"
+  home: "Inicio"
+  studios: "Estudios"
+  directors: "Directores"
+  actors: "Actores"
+  search: "Buscar"
+  search_placeholder: "Buscar película..."
+
+home:
+  title: "Películas recientes"
+  total_movies: "{0}No hay películas|{1}%count% película en total|]1,Inf[%count% películas en total"
+
+search:
+  title: "Buscar"
+  title_with_query: "Resultados para \"%query%\""
+  placeholder: "Buscar una película, actor, director o estudio..."
+  button: "Buscar"
+  help_text: "Buscar en títulos de películas, nombres de actores, directores y estudios"
+  results_for: "Resultados para \"%query%\""
+  results_count: "%count% resultado(s)"
+  no_results_title: "No hay resultados"
+  no_results_text: "No se encontraron películas para \"%query%\""
+  no_results_tips: "Intenta con diferentes palabras clave o verifica la ortografía"
+  start_search_title: "Comienza tu búsqueda"
+  start_search_text: "Escribe una palabra clave para encontrar tus películas favoritas"
+
+movie:
+  details: "Ver detalles"
+  download: "Descargar"
+  studio: "Estudio"
+  director: "Director"
+  actors: "Actores"
+  tags: "Etiquetas"
+  added_on: "Añadido el"
+  updated_on: "Actualizado el"
+  back_to_list: "Volver a la lista"
+
+studio:
+  movies_count: "%count% película(s)"
+  founded_in: "Fundado en"
+  back_to_list: "Volver a estudios"
+
+director:
+  movies_count: "%count% película(s) dirigida(s)"
+  nationality: "Nacionalidad"
+  born_in: "Nacido en"
+  back_to_list: "Volver a directores"
+
+actor:
+  movies_count: "%count% película(s)"
+  nationality: "Nacionalidad"
+  born_in: "Nacido en"
+  back_to_list: "Volver a actores"
+
+pagination:
+  previous: "Anterior"
+  next: "Siguiente"
+
+language:
+  english: "Inglés"
+  french: "Francés"
+  spanish: "Español"
+
+common:
+  page: "Página"
+  of: "de"
+  total: "total"
+  no_movies: "No se encontraron películas"
+  empty_collection: "La colección de películas está vacía."
+  no_movies_for: "No se encontraron películas para este %type%"
+  copyright: "© %year% Colección de Películas. Todos los derechos reservados."
+  page_of: "Página %current% de %total%"

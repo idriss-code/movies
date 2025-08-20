@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ app.request.locale }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Movie Collection{% endblock %}</title>
+    <title>{% block title %}{{ 'nav.brand'|trans }}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="{{ path('app_home') }}">🎬 Movie Collection</a>
+            <a class="navbar-brand fw-bold" href="{{ path('app_home') }}">{{ 'nav.brand'|trans }}</a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -20,24 +21,38 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+                        <a class="nav-link" href="{{ path('app_home') }}">{{ 'nav.home'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_studio_index') }}">Studios</a>
+                        <a class="nav-link" href="{{ path('app_studio_index') }}">{{ 'nav.studios'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_director_index') }}">Réalisateurs</a>
+                        <a class="nav-link" href="{{ path('app_director_index') }}">{{ 'nav.directors'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_actor_index') }}">Acteurs</a>
+                        <a class="nav-link" href="{{ path('app_actor_index') }}">{{ 'nav.actors'|trans }}</a>
                     </li>
                 </ul>
-                
-                <form class="d-flex" method="GET" action="{{ path('app_search') }}">
-                    <input class="form-control me-2" type="search" name="q" placeholder="Rechercher..." 
-                           value="{{ app.request.query.get('q') }}" aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Rechercher</button>
-                </form>
+
+                <div class="d-flex align-items-center">
+                    <form class="d-flex me-3" method="GET" action="{{ path('app_search') }}">
+                        <input class="form-control me-2" type="search" name="q" 
+                               placeholder="{{ 'nav.search_placeholder'|trans }}" 
+                               value="{{ app.request.query.get('q') }}" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit">{{ 'nav.search'|trans }}</button>
+                    </form>
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown">
+                            {% if app.request.locale == 'fr' %}🇫🇷 FR{% elseif app.request.locale == 'es' %}🇪🇸 ES{% else %}🇬🇧 EN{% endif %}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ path('app_language_switch', {locale: 'en'}) }}">🇬🇧 {{ 'language.english'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_language_switch', {locale: 'fr'}) }}">🇫🇷 {{ 'language.french'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_language_switch', {locale: 'es'}) }}">🇪🇸 {{ 'language.spanish'|trans }}</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -48,7 +63,7 @@
 
     <footer class="bg-light py-4 mt-5">
         <div class="container text-center text-muted">
-            <p>&copy; {{ 'now'|date('Y') }} Movie Collection. Créé avec Symfony.</p>
+            <p>{{ 'common.copyright'|trans({'%year%': 'now'|date('Y')}) }}</p>
         </div>
     </footer>
 

@@ -1,0 +1,76 @@
+# Français - Messages de l'application
+nav:
+    brand: "🎬 Collection de Films"
+    home: "Accueil"
+    studios: "Studios"
+    directors: "Réalisateurs"
+    actors: "Acteurs"
+    search: "Rechercher"
+    search_placeholder: "Rechercher..."
+
+home:
+    title: "Films récents"
+    total_movies: "{0}Aucun film|{1}%count% film au total|]1,Inf[%count% films au total"
+
+movie:
+    title: "Détail du film"
+    details: "Voir détails"
+    download: "Télécharger"
+    download_unavailable: "Téléchargement non disponible"
+    studio: "Studio"
+    director: "Réalisateur"
+    actors: "Acteurs"
+    tags: "Tags"
+    added_on: "Ajouté le"
+    updated_on: "Mis à jour"
+    back_to_list: "← Retour à la liste"
+
+studio:
+    title: "Studios"
+    detail_title: "Films du studio"
+    movies_count: "{0}Aucun film|{1}%count% film|]1,Inf[%count% films"
+    view_movies: "Voir les films"
+    back_to_studios: "← Retour aux studios"
+
+director:
+    title: "Réalisateurs"
+    detail_title: "Filmographie"
+    movies_count: "{0}Aucun film|{1}%count% film|]1,Inf[%count% films"
+    view: "Voir"
+    back_to_directors: "← Retour aux réalisateurs"
+
+actor:
+    title: "Acteurs"
+    detail_title: "Filmographie"
+    movies_count: "{0}Aucun film|{1}%count% film|]1,Inf[%count% films"
+    view: "Voir"
+    back_to_actors: "← Retour aux acteurs"
+
+search:
+    title: "Recherche"
+    title_with_query: "Recherche : %query%"
+    button: "🔍 Rechercher"
+    placeholder: "Rechercher un film, acteur, réalisateur ou studio..."
+    help_text: "Recherche dans les titres de films, noms d'acteurs, réalisateurs et studios"
+    results_for: "Résultats pour \"%query%\""
+    results_count: "{0}Aucun résultat|{1}%count% résultat|]1,Inf[%count% résultats"
+    no_results_title: "Aucun résultat trouvé"
+    no_results_text: "Aucun film ne correspond à votre recherche \"%query%\"."
+    no_results_tips: "Conseils : vérifiez l'orthographe, utilisez des mots-clés plus généraux, ou essayez le nom d'un acteur ou réalisateur."
+    start_search_title: "Commencez votre recherche"
+    start_search_text: "Utilisez le champ ci-dessus pour rechercher des films, acteurs, réalisateurs ou studios."
+
+common:
+    no_movies: "Aucun film trouvé"
+    empty_collection: "La collection de films est vide."
+    no_movies_for: "Aucun film trouvé pour ce %type%"
+    copyright: "© %year% Collection de Films. Tous droits réservés."
+    page_of: "Page %current% sur %total%"
+
+language:
+    french: "Français"
+    english: "English"
+    spanish: "Español"
+    switch_to_fr: "Passer en français"
+    switch_to_en: "Switch to English"
+    switch_to_es: "Cambiar a español"

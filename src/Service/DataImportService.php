@@ -81,7 +81,8 @@ class DataImportService
             ->setYear((int) $record['year'])
             ->setPoster($record['poster_url'] ?? null)
             ->setStudio($studio)
-            ->setDirector($director);
+            ->setDirector($director)
+            ->setDownloadLink($record['download_link'] ?? null);
 
         if (!empty($record['added_at'])) {
             $movie->setAddedAt(new \DateTime($record['added_at']));

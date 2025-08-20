@@ -176,7 +176,8 @@ class AppFixtures extends Fixture
                 'studio' => 'Marvel Studios',
                 'director' => 'Russo Brothers',
                 'actors' => ['Robert Downey Jr.', 'Chris Evans', 'Mark Ruffalo', 'Chris Hemsworth', 'Scarlett Johansson'],
-                'tags' => ['Action', 'Adventure', 'Superhero', 'Marvel']
+                'tags' => ['Action', 'Adventure', 'Superhero', 'Marvel'],
+                'download_link' => 'https://example.com/downloads/avengers-endgame.torrent'
             ],
             [
                 'title' => 'The Dark Knight',
@@ -185,7 +186,8 @@ class AppFixtures extends Fixture
                 'studio' => 'Warner Bros. Pictures',
                 'director' => 'Christopher Nolan',
                 'actors' => ['Christian Bale', 'Heath Ledger', 'Aaron Eckhart'],
-                'tags' => ['Action', 'Crime', 'Drama']
+                'tags' => ['Action', 'Crime', 'Drama'],
+                'download_link' => 'https://example.com/downloads/dark-knight.torrent'
             ],
             [
                 'title' => 'Inception',
@@ -194,7 +196,8 @@ class AppFixtures extends Fixture
                 'studio' => 'Warner Bros. Pictures',
                 'director' => 'Christopher Nolan',
                 'actors' => ['Leonardo DiCaprio', 'Marion Cotillard'],
-                'tags' => ['Action', 'Sci-Fi', 'Thriller']
+                'tags' => ['Action', 'Sci-Fi', 'Thriller'],
+                'download_link' => 'https://example.com/downloads/inception.torrent'
             ],
             [
                 'title' => 'La La Land',
@@ -212,7 +215,8 @@ class AppFixtures extends Fixture
                 'studio' => 'Marvel Studios',
                 'director' => 'Jon Favreau',
                 'actors' => ['Robert Downey Jr.', 'Gwyneth Paltrow'],
-                'tags' => ['Action', 'Adventure', 'Superhero', 'Marvel']
+                'tags' => ['Action', 'Adventure', 'Superhero', 'Marvel'],
+                'download_link' => 'https://example.com/downloads/iron-man.torrent'
             ],
         ];
         
@@ -253,7 +257,8 @@ class AppFixtures extends Fixture
         $movie = new Movie();
         $movie->setTitle($movieData['title'])
               ->setYear($movieData['year'])
-              ->setPoster($movieData['poster'] ?? null);
+              ->setPoster($movieData['poster'] ?? null)
+              ->setDownloadLink($movieData['download_link'] ?? null);
         
         // Set random added date within last 2 years
         $addedDate = new \DateTime();

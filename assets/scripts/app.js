@@ -97,28 +97,7 @@ function initSearch() {
                 }
             });
             
-            // Clear search
-            const clearBtn = document.createElement('button');
-            clearBtn.type = 'button';
-            clearBtn.className = 'btn-close btn-close-search';
-            clearBtn.style.cssText = 'position: absolute; right: 45px; top: 50%; transform: translateY(-50%); z-index: 5;';
-            clearBtn.style.display = searchInput.value ? 'block' : 'none';
-            
-            clearBtn.addEventListener('click', function() {
-                searchInput.value = '';
-                this.style.display = 'none';
-                searchInput.focus();
-            });
-            
-            const inputGroup = searchInput.closest('.input-group');
-            if (inputGroup) {
-                inputGroup.style.position = 'relative';
-                inputGroup.appendChild(clearBtn);
-                
-                searchInput.addEventListener('input', function() {
-                    clearBtn.style.display = this.value ? 'block' : 'none';
-                });
-            }
+            // Clear button functionality is now handled by the template
         }
     });
 }
@@ -208,6 +187,19 @@ window.addEventListener('scroll', function() {
         scrollBtn.style.display = 'none';
     }
 });
+
+/**
+ * Clear search function
+ */
+function clearSearch() {
+    const searchInput = document.querySelector('input[name="q"]');
+    if (searchInput) {
+        searchInput.value = '';
+        searchInput.focus();
+        // Redirect to clean search page
+        window.location.href = window.location.pathname;
+    }
+}
 
 /**
  * Keyboard shortcuts

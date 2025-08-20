@@ -1,23 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recherche{% if search_query %} : {{ search_query }}{% endif %} - Movie Collection{% endblock %}
+{% block title %}
+    {% if search_query %}
+        {{ 'search.title_with_query'|trans({'%query%': search_query}) }}
+    {% else %}
+        {{ 'search.title'|trans }}
+    {% endif %} - {{ 'nav.brand'|trans }}
+{% endblock %}
 
 {% block body %}
     <div class="row justify-content-center mb-4">
         <div class="col-md-8">
-            <h1 class="h2 text-center mb-4">Recherche</h1>
+            <h1 class="h2 text-center mb-4 text-primary">{{ 'search.title'|trans }}</h1>
             
             <form method="GET" action="{{ path('app_search') }}" class="mb-4">
-                <div class="input-group input-group-lg">
-                    <input type="search" class="form-control" name="q" 
-                           placeholder="Rechercher un film, acteur, réalisateur ou studio..." 
+                <div class="search-container position-relative">
+                    <input type="search" class="form-control form-control-lg search-input" name="q" 
+                           placeholder="{{ 'search.placeholder'|trans }}" 
                            value="{{ search_query }}" autofocus>
-                    <button class="btn btn-primary" type="submit">
-                        <span class="me-1">🔍</span> Rechercher
+                    {% if search_query %}
+                        <button type="button" class="btn-clear-search" onclick="clearSearch()">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    {% endif %}
+                    <button class="btn btn-primary btn-lg search-btn" type="submit">
+                        {{ 'search.button'|trans }}
                     </button>
                 </div>
-                <div class="form-text text-center mt-2">
-                    Recherche dans les titres de films, noms d'acteurs, réalisateurs et studios
+                <div class="search-help-text">
+                    {{ 'search.help_text'|trans }}
                 </div>
             </form>
         </div>
@@ -25,9 +36,11 @@
 
     {% if search_query %}
         {% if results.getTotalItemCount > 0 %}
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="h4">Résultats pour "{{ search_query }}"</h2>
-                <small class="text-muted">{{ results.getTotalItemCount }} résultat{% if results.getTotalItemCount > 1 %}s{% endif %}</small>
+            <div class="search-results-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 class="search-results-title h4">{{ 'search.results_for'|trans({'%query%': search_query}) }}</h2>
+                    <div class="search-results-count">{{ 'search.results_count'|trans({'%count%': results.getTotalItemCount}) }}</div>
+                </div>
             </div>
 
             <div class="row g-4">
@@ -69,8 +82,18 @@
                                 {% endif %}
                                 
                                 <div class="mt-auto">
-                                    <a href="{{ path('app_movie_show', {'id': movie.id}) }}" 
-                                       class="btn btn-primary btn-sm">Voir détails</a>
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ path('app_movie_show', {'id': movie.id}) }}" 
+                                           class="btn btn-primary btn-sm flex-grow-1">{{ 'movie.details'|trans }}</a>
+                                        {% if movie.downloadLink %}
+                                            <a href="{{ movie.downloadLink }}" 
+                                               class="btn btn-success btn-sm" 
+                                               title="{{ 'movie.download'|trans }}"
+                                               target="_blank">
+                                                <i class="bi bi-download"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -82,21 +105,18 @@
                 {{ knp_pagination_render(results) }}
             </div>
         {% else %}
-            <div class="text-center py-5">
-                <h3 class="text-muted">Aucun résultat trouvé</h3>
-                <p class="text-muted">Aucun film ne correspond à votre recherche "{{ search_query }}".</p>
-                <p class="text-muted">
-                    <small>
-                        Conseils : vérifiez l'orthographe, utilisez des mots-clés plus généraux, 
-                        ou essayez le nom d'un acteur ou réalisateur.
-                    </small>
+            <div class="no-results-container">
+                <h3>{{ 'search.no_results_title'|trans }}</h3>
+                <p>{{ 'search.no_results_text'|trans({'%query%': search_query}) }}</p>
+                <p>
+                    <small>{{ 'search.no_results_tips'|trans }}</small>
                 </p>
             </div>
         {% endif %}
     {% else %}
-        <div class="text-center py-5">
-            <h3 class="text-muted">Commencez votre recherche</h3>
-            <p class="text-muted">Utilisez le champ ci-dessus pour rechercher des films, acteurs, réalisateurs ou studios.</p>
+        <div class="no-results-container">
+            <h3>{{ 'search.start_search_title'|trans }}</h3>
+            <p>{{ 'search.start_search_text'|trans }}</p>
         </div>
     {% endif %}
 {% endblock %}

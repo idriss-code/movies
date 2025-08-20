@@ -1,0 +1,76 @@
+# English - Application messages
+nav:
+    brand: "🎬 Movie Collection"
+    home: "Home"
+    studios: "Studios"
+    directors: "Directors"
+    actors: "Actors"
+    search: "Search"
+    search_placeholder: "Search..."
+
+home:
+    title: "Recent Movies"
+    total_movies: "{0}No movies|{1}%count% movie in total|]1,Inf[%count% movies in total"
+
+movie:
+    title: "Movie Details"
+    details: "View Details"
+    download: "Download"
+    download_unavailable: "Download unavailable"
+    studio: "Studio"
+    director: "Director"
+    actors: "Actors"
+    tags: "Tags"
+    added_on: "Added on"
+    updated_on: "Updated on"
+    back_to_list: "← Back to list"
+
+studio:
+    title: "Studios"
+    detail_title: "Studio Movies"
+    movies_count: "{0}No movies|{1}%count% movie|]1,Inf[%count% movies"
+    view_movies: "View movies"
+    back_to_studios: "← Back to studios"
+
+director:
+    title: "Directors"
+    detail_title: "Filmography"
+    movies_count: "{0}No movies|{1}%count% movie|]1,Inf[%count% movies"
+    view: "View"
+    back_to_directors: "← Back to directors"
+
+actor:
+    title: "Actors"
+    detail_title: "Filmography"
+    movies_count: "{0}No movies|{1}%count% movie|]1,Inf[%count% movies"
+    view: "View"
+    back_to_actors: "← Back to actors"
+
+search:
+    title: "Search"
+    title_with_query: "Search: %query%"
+    button: "🔍 Search"
+    placeholder: "Search for a movie, actor, director or studio..."
+    help_text: "Search in movie titles, actor names, director names and studios"
+    results_for: "Results for \"%query%\""
+    results_count: "{0}No results|{1}%count% result|]1,Inf[%count% results"
+    no_results_title: "No results found"
+    no_results_text: "No movie matches your search \"%query%\"."
+    no_results_tips: "Tips: check spelling, use more general keywords, or try an actor or director name."
+    start_search_title: "Start your search"
+    start_search_text: "Use the field above to search for movies, actors, directors or studios."
+
+common:
+    no_movies: "No movies found"
+    empty_collection: "The movie collection is empty."
+    no_movies_for: "No movies found for this %type%"
+    copyright: "© %year% Movie Collection. All rights reserved."
+    page_of: "Page %current% of %total%"
+
+language:
+    french: "Français"
+    english: "English"
+    spanish: "Español"
+    switch_to_fr: "Passer en français"
+    switch_to_en: "Switch to English"
+    switch_to_es: "Cambiar a español"

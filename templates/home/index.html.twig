@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil - Movie Collection{% endblock %}
+{% block title %}{{ 'nav.home'|trans }} - {{ 'nav.brand'|trans }}{% endblock %}
 
 {% block body %}
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h2">Films récents</h1>
-        <small class="text-muted">{{ pagination.getTotalItemCount }} films au total</small>
+        <h1 class="h2 text-primary">{{ 'home.title'|trans }}</h1>
+        <small class="text-muted">{{ 'home.total_movies'|trans({'%count%': pagination.getTotalItemCount}) }}</small>
     </div>
 
     {% if pagination.getTotalItemCount > 0 %}
@@ -32,8 +32,18 @@
                             </div>
                             
                             <div class="mt-auto">
-                                <a href="{{ path('app_movie_show', {'id': movie.id}) }}" 
-                                   class="btn btn-primary btn-sm">Voir détails</a>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ path('app_movie_show', {'id': movie.id}) }}" 
+                                       class="btn btn-primary btn-sm flex-grow-1">{{ 'movie.details'|trans }}</a>
+                                    {% if movie.downloadLink %}
+                                        <a href="{{ movie.downloadLink }}" 
+                                           class="btn btn-success btn-sm" 
+                                           title="{{ 'movie.download'|trans }}"
+                                           target="_blank">
+                                            <i class="bi bi-download"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -46,8 +56,8 @@
         </div>
     {% else %}
         <div class="text-center py-5">
-            <h3 class="text-muted">Aucun film trouvé</h3>
-            <p class="text-muted">La collection de films est vide.</p>
+            <h3 class="text-muted">{{ 'common.no_movies'|trans }}</h3>
+            <p class="text-muted">{{ 'common.empty_collection'|trans }}</p>
         </div>
     {% endif %}
 {% endblock %}

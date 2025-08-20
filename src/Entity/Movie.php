@@ -26,6 +26,9 @@ class Movie
     #[ORM\Column]
     private ?int $year = null;
 
+    #[ORM\Column(length: 500, nullable: true)]
+    private ?string $downloadLink = null;
+
     #[ORM\ManyToOne(inversedBy: 'movies')]
     private ?Studio $studio = null;
 
@@ -207,6 +210,18 @@ class Movie
     public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getDownloadLink(): ?string
+    {
+        return $this->downloadLink;
+    }
+
+    public function setDownloadLink(?string $downloadLink): static
+    {
+        $this->downloadLink = $downloadLink;
 
         return $this;
     }
