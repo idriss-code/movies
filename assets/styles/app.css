@@ -516,6 +516,27 @@ footer {
     animation: pulse 1.5s infinite;
 }
 
+/* Technical Info Styling */
+.tech-info-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tech-info-item .badge {
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+}
+
+.tech-info-item strong {
+    color: var(--dark-bg);
+    font-size: 0.9rem;
+}
+
 /* Movie Metadata Styling */
 .movie-metadata {
     background: linear-gradient(135deg, rgba(248, 249, 250, 0.8) 0%, rgba(233, 236, 239, 0.8) 100%);

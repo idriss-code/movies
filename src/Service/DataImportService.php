@@ -82,7 +82,10 @@ class DataImportService
             ->setPoster($record['poster_url'] ?? null)
             ->setStudio($studio)
             ->setDirector($director)
-            ->setDownloadLink($record['download_link'] ?? null);
+            ->setDownloadLink($record['download_link'] ?? null)
+            ->setFormat($record['format'] ?? null)
+            ->setFileSize($record['file_size'] ?? null)
+            ->setDuration($record['duration'] ?? null);
 
         if (!empty($record['added_at'])) {
             $movie->setAddedAt(new \DateTime($record['added_at']));

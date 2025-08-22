@@ -177,7 +177,10 @@ class AppFixtures extends Fixture
                 'director' => 'Russo Brothers',
                 'actors' => ['Robert Downey Jr.', 'Chris Evans', 'Mark Ruffalo', 'Chris Hemsworth', 'Scarlett Johansson'],
                 'tags' => ['Action', 'Adventure', 'Superhero', 'Marvel'],
-                'download_link' => 'https://example.com/downloads/avengers-endgame.torrent'
+                'download_link' => 'https://example.com/downloads/avengers-endgame.torrent',
+                'format' => 'MP4 / 1920x1080',
+                'file_size' => '7.2 GB',
+                'duration' => '3h 01min'
             ],
             [
                 'title' => 'The Dark Knight',
@@ -187,7 +190,10 @@ class AppFixtures extends Fixture
                 'director' => 'Christopher Nolan',
                 'actors' => ['Christian Bale', 'Heath Ledger', 'Aaron Eckhart'],
                 'tags' => ['Action', 'Crime', 'Drama'],
-                'download_link' => 'https://example.com/downloads/dark-knight.torrent'
+                'download_link' => 'https://example.com/downloads/dark-knight.torrent',
+                'format' => 'MP4 / 1920x1080',
+                'file_size' => '5.8 GB',
+                'duration' => '2h 32min'
             ],
             [
                 'title' => 'Inception',
@@ -197,7 +203,10 @@ class AppFixtures extends Fixture
                 'director' => 'Christopher Nolan',
                 'actors' => ['Leonardo DiCaprio', 'Marion Cotillard'],
                 'tags' => ['Action', 'Sci-Fi', 'Thriller'],
-                'download_link' => 'https://example.com/downloads/inception.torrent'
+                'download_link' => 'https://example.com/downloads/inception.torrent',
+                'format' => 'MP4 / 1920x1080',
+                'file_size' => '5.4 GB',
+                'duration' => '2h 28min'
             ],
             [
                 'title' => 'La La Land',
@@ -216,7 +225,10 @@ class AppFixtures extends Fixture
                 'director' => 'Jon Favreau',
                 'actors' => ['Robert Downey Jr.', 'Gwyneth Paltrow'],
                 'tags' => ['Action', 'Adventure', 'Superhero', 'Marvel'],
-                'download_link' => 'https://example.com/downloads/iron-man.torrent'
+                'download_link' => 'https://example.com/downloads/iron-man.torrent',
+                'format' => 'MP4 / 1920x1080',
+                'file_size' => '4.2 GB',
+                'duration' => '2h 06min'
             ],
         ];
         
@@ -258,7 +270,10 @@ class AppFixtures extends Fixture
         $movie->setTitle($movieData['title'])
               ->setYear($movieData['year'])
               ->setPoster($movieData['poster'] ?? null)
-              ->setDownloadLink($movieData['download_link'] ?? null);
+              ->setDownloadLink($movieData['download_link'] ?? null)
+              ->setFormat($movieData['format'] ?? null)
+              ->setFileSize($movieData['file_size'] ?? null)
+              ->setDuration($movieData['duration'] ?? null);
         
         // Set random added date within last 2 years
         $addedDate = new \DateTime();

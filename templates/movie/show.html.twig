@@ -76,6 +76,41 @@
                 </div>
             {% endif %}
 
+            {% if movie.format or movie.fileSize or movie.duration %}
+                <div class="mb-4">
+                    <h5 class="text-primary">{{ 'movie.technical_info'|trans }}</h5>
+                    <div class="row">
+                        {% if movie.format %}
+                            <div class="col-sm-4 mb-2">
+                                <div class="tech-info-item">
+                                    <i class="bi bi-file-earmark-play text-info me-2"></i>
+                                    <strong>{{ 'movie.format'|trans }}:</strong>
+                                    <span class="badge bg-secondary">{{ movie.format }}</span>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if movie.fileSize %}
+                            <div class="col-sm-4 mb-2">
+                                <div class="tech-info-item">
+                                    <i class="bi bi-hdd text-warning me-2"></i>
+                                    <strong>{{ 'movie.file_size'|trans }}:</strong>
+                                    <span class="badge bg-secondary">{{ movie.fileSize }}</span>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if movie.duration %}
+                            <div class="col-sm-4 mb-2">
+                                <div class="tech-info-item">
+                                    <i class="bi bi-clock text-success me-2"></i>
+                                    <strong>{{ 'movie.duration'|trans }}:</strong>
+                                    <span class="badge bg-secondary">{{ movie.duration }}</span>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+
             {% if movie.downloadLink %}
                 <div class="mb-4">
                     <a href="{{ movie.downloadLink }}" 

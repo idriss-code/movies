@@ -29,6 +29,15 @@ class Movie
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $downloadLink = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $format = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $fileSize = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $duration = null;
+
     #[ORM\ManyToOne(inversedBy: 'movies')]
     private ?Studio $studio = null;
 
@@ -222,6 +231,42 @@ class Movie
     public function setDownloadLink(?string $downloadLink): static
     {
         $this->downloadLink = $downloadLink;
+
+        return $this;
+    }
+
+    public function getFormat(): ?string
+    {
+        return $this->format;
+    }
+
+    public function setFormat(?string $format): static
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    public function getFileSize(): ?string
+    {
+        return $this->fileSize;
+    }
+
+    public function setFileSize(?string $fileSize): static
+    {
+        $this->fileSize = $fileSize;
+
+        return $this;
+    }
+
+    public function getDuration(): ?string
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?string $duration): static
+    {
+        $this->duration = $duration;
 
         return $this;
     }
