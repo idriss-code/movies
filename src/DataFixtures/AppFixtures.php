@@ -172,7 +172,7 @@ class AppFixtures extends Fixture
             [
                 'title' => 'Avengers: Endgame',
                 'year' => 2019,
-                'poster' => 'https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg',
+                'poster' => 'avengers-endgame.jpg',
                 'studio' => 'Marvel Studios',
                 'director' => 'Russo Brothers',
                 'actors' => ['Robert Downey Jr.', 'Chris Evans', 'Mark Ruffalo', 'Chris Hemsworth', 'Scarlett Johansson'],
@@ -185,7 +185,7 @@ class AppFixtures extends Fixture
             [
                 'title' => 'The Dark Knight',
                 'year' => 2008,
-                'poster' => 'https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
+                'poster' => 'dark-knight.jpg',
                 'studio' => 'Warner Bros. Pictures',
                 'director' => 'Christopher Nolan',
                 'actors' => ['Christian Bale', 'Heath Ledger', 'Aaron Eckhart'],
@@ -198,7 +198,7 @@ class AppFixtures extends Fixture
             [
                 'title' => 'Inception',
                 'year' => 2010,
-                'poster' => 'https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg',
+                'poster' => 'inception.jpg',
                 'studio' => 'Warner Bros. Pictures',
                 'director' => 'Christopher Nolan',
                 'actors' => ['Leonardo DiCaprio', 'Marion Cotillard'],
@@ -211,7 +211,7 @@ class AppFixtures extends Fixture
             [
                 'title' => 'La La Land',
                 'year' => 2016,
-                'poster' => 'https://image.tmdb.org/t/p/w500/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg',
+                'poster' => 'la-la-land.jpg',
                 'studio' => 'Summit Entertainment',
                 'director' => 'Damien Chazelle',
                 'actors' => ['Ryan Gosling', 'Emma Stone'],
@@ -220,7 +220,7 @@ class AppFixtures extends Fixture
             [
                 'title' => 'Iron Man',
                 'year' => 2008,
-                'poster' => 'https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg',
+                'poster' => 'iron-man.jpg',
                 'studio' => 'Marvel Studios',
                 'director' => 'Jon Favreau',
                 'actors' => ['Robert Downey Jr.', 'Gwyneth Paltrow'],

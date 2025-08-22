@@ -79,7 +79,7 @@ class DataImportService
         $movie = new Movie();
         $movie->setTitle($record['title'])
             ->setYear((int) $record['year'])
-            ->setPoster($record['poster_url'] ?? null)
+            ->setPoster($record['poster_url'] ?? $record['poster'] ?? null)
             ->setStudio($studio)
             ->setDirector($director)
             ->setDownloadLink($record['download_link'] ?? null)
@@ -163,7 +163,14 @@ class DataImportService
 
     private function findOrCreateStudio(string $name, ?string $logoUrl = null): Studio
     {
-        $studio = $this->studioRepository->findOneByName($name);
+        try {
+            $studio = $this->studioRepository->findOneByName($name);
+        } catch (\Exception $e) {
+            // Si plusieurs résultats, prendre le premier
+            $studios = $this->studioRepository->findBy(['name' => $name], ['id' => 'ASC'], 1);
+            $studio = $studios ? $studios[0] : null;
+        }
+        
         if (!$studio) {
             $studio = new Studio();
             $studio->setName($name)->setLogo($logoUrl);
@@ -174,7 +181,14 @@ class DataImportService
 
     private function findOrCreateDirector(string $firstName, string $lastName): Director
     {
-        $director = $this->directorRepository->findOneByName($firstName, $lastName);
+        try {
+            $director = $this->directorRepository->findOneByName($firstName, $lastName);
+        } catch (\Exception $e) {
+            // Si plusieurs résultats, prendre le premier
+            $directors = $this->directorRepository->findBy(['firstName' => $firstName, 'lastName' => $lastName], ['id' => 'ASC'], 1);
+            $director = $directors ? $directors[0] : null;
+        }
+        
         if (!$director) {
             $director = new Director();
             $director->setFirstName($firstName)->setLastName($lastName);
@@ -185,7 +199,14 @@ class DataImportService
 
     private function findOrCreateActor(string $firstName, string $lastName): Actor
     {
-        $actor = $this->actorRepository->findOneByName($firstName, $lastName);
+        try {
+            $actor = $this->actorRepository->findOneByName($firstName, $lastName);
+        } catch (\Exception $e) {
+            // Si plusieurs résultats, prendre le premier
+            $actors = $this->actorRepository->findBy(['firstName' => $firstName, 'lastName' => $lastName], ['id' => 'ASC'], 1);
+            $actor = $actors ? $actors[0] : null;
+        }
+        
         if (!$actor) {
             $actor = new Actor();
             $actor->setFirstName($firstName)->setLastName($lastName);
@@ -196,7 +217,14 @@ class DataImportService
 
     private function findOrCreateTag(string $name): Tag
     {
-        $tag = $this->tagRepository->findOneByName($name);
+        try {
+            $tag = $this->tagRepository->findOneByName($name);
+        } catch (\Exception $e) {
+            // Si plusieurs résultats, prendre le premier
+            $tags = $this->tagRepository->findBy(['name' => $name], ['id' => 'ASC'], 1);
+            $tag = $tags ? $tags[0] : null;
+        }
+        
         if (!$tag) {
             $colors = ['#dc3545', '#198754', '#0d6efd', '#fd7e14', '#6f42c1', '#20c997', '#ffc107'];
             $tag = new Tag();

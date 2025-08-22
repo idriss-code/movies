@@ -16,6 +16,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFilter('localized_date', [$this, 'localizedDate']),
+            new TwigFilter('movie_poster', [$this, 'moviePosterPath']),
         ];
     }
 
@@ -44,5 +45,14 @@ class AppExtension extends AbstractExtension
         $formatString = $formats[$locale][$format] ?? $formats['en'][$format];
         
         return $date->format($formatString);
+    }
+
+    public function moviePosterPath(?string $filename): string
+    {
+        if (!$filename) {
+            return '/images/films/default-poster.jpg';
+        }
+        
+        return '/images/films/' . $filename;
     }
 }

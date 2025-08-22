@@ -20,13 +20,13 @@ class Movie
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 500, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster = null;
 
     #[ORM\Column]
     private ?int $year = null;
 
-    #[ORM\Column(length: 500, nullable: true)]
+    #[ORM\Column(length: 2048, nullable: true)]
     private ?string $downloadLink = null;
 
     #[ORM\Column(length: 100, nullable: true)]

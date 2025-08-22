@@ -14,7 +14,7 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="card h-100 movie-card">
                         {% if movie.poster %}
-                            <img src="{{ movie.poster }}" class="card-img-top movie-poster" 
+                            <img src="{{ movie.poster|movie_poster }}" class="card-img-top movie-poster" 
                                  alt="{{ movie.title }}" loading="lazy">
                         {% else %}
                             <div class="card-img-top bg-light d-flex align-items-center justify-content-center movie-poster">
@@ -38,8 +38,7 @@
                                     {% if movie.downloadLink %}
                                         <a href="{{ movie.downloadLink }}" 
                                            class="btn btn-success btn-sm" 
-                                           title="{{ 'movie.download'|trans }}"
-                                           target="_blank">
+                                           title="{{ 'movie.download'|trans }}">
                                             <i class="bi bi-download"></i>
                                         </a>
                                     {% endif %}

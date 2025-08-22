@@ -23,3 +23,13 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+# Images uploaded by users
+/public/images/films/*.jpg
+/public/images/films/*.jpeg
+/public/images/films/*.png
+/public/images/films/*.gif
+/public/images/films/*.webp
+
+# CSV exports with timestamps
+/data/movies_*_*.csv

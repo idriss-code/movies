@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-4">
             {% if movie.poster %}
-                <img src="{{ movie.poster }}" class="img-fluid rounded shadow movie-detail-poster" 
+                <img src="{{ movie.poster|movie_poster }}" class="img-fluid rounded shadow movie-detail-poster" 
                      alt="{{ movie.title }}">
             {% else %}
                 <div class="bg-light rounded shadow d-flex align-items-center justify-content-center movie-detail-poster">
@@ -114,8 +114,7 @@
             {% if movie.downloadLink %}
                 <div class="mb-4">
                     <a href="{{ movie.downloadLink }}" 
-                       class="btn btn-success btn-lg" 
-                       target="_blank">
+                       class="btn btn-success btn-lg">
                         <i class="bi bi-download me-2"></i>{{ 'movie.download'|trans }}
                     </a>
                 </div>
