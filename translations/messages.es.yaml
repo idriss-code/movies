@@ -76,3 +76,11 @@ common:
   no_movies_for: "No se encontraron películas para este %type%"
   copyright: "© %year% Colección de Películas. Todos los derechos reservados."
   page_of: "Página %current% de %total%"
+  back: "Volver"
+  cancel: "Cancelar"
+  understand: "Entiendo"
+
+warning:
+  adult_content_title: "Advertencia - Contenido para adultos"
+  adult_content_message: "Este sitio contiene contenido destinado a adultos. Al continuar, confirmas que tienes la edad legal requerida en tu jurisdicción para acceder a este tipo de contenido."
+  select_language: "Seleccionar idioma"

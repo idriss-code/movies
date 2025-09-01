@@ -70,6 +70,14 @@ common:
     no_movies_for: "Aucun film trouvé pour ce %type%"
     copyright: "© %year% Collection de Films. Tous droits réservés."
     page_of: "Page %current% sur %total%"
+    back: "Retour"
+    cancel: "Annuler"
+    understand: "J'ai compris"
+
+warning:
+    adult_content_title: "Avertissement - Contenu pour adultes"
+    adult_content_message: "Ce site contient du contenu destiné aux adultes. En continuant, vous confirmez avoir l'âge légal requis dans votre juridiction pour accéder à ce type de contenu."
+    select_language: "Choisir la langue"
 
 language:
     french: "Français"
