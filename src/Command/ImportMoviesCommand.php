@@ -49,6 +49,7 @@ class ImportMoviesCommand extends Command
                 ['Métrique', 'Valeur'],
                 [
                     ['Films importés', $result['stats']['imported']],
+                    ['Films mis à jour', $result['stats']['updated']],
                     ['Erreurs', $result['stats']['errors']],
                     ['Ignorés', $result['stats']['skipped']],
                 ]

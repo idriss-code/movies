@@ -9,6 +9,7 @@ use App\Entity\Studio;
 use App\Entity\Tag;
 use App\Repository\ActorRepository;
 use App\Repository\DirectorRepository;
+use App\Repository\MovieRepository;
 use App\Repository\StudioRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,6 +21,7 @@ class DataImportService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
+        private MovieRepository $movieRepository,
         private StudioRepository $studioRepository,
         private DirectorRepository $directorRepository,
         private ActorRepository $actorRepository,
@@ -36,7 +38,7 @@ class DataImportService
         $csv->setHeaderOffset(0);
         $records = $csv->getRecords();
 
-        $stats = ['imported' => 0, 'errors' => 0, 'skipped' => 0];
+        $stats = ['imported' => 0, 'updated' => 0, 'errors' => 0, 'skipped' => 0];
         $errors = [];
 
         $recordsArray = iterator_to_array($records);
@@ -66,9 +68,25 @@ class DataImportService
             throw new \InvalidArgumentException('Le titre du film est requis');
         }
 
+        $studioName = !empty($record['studio_name']) ? $record['studio_name'] : null;
+        $format = $record['format'] ?? null;
+        
+        // Vérifier si un film avec le même titre, studio et format existe déjà
+        $existingMovie = $this->movieRepository->findByTitleStudioNameAndFormat($record['title'], $studioName, $format);
+        
         $studio = null;
-        if (!empty($record['studio_name'])) {
-            $studio = $this->findOrCreateStudio($record['studio_name'], $record['studio_logo_url'] ?? null);
+        if ($studioName) {
+            $studio = $this->findOrCreateStudio($studioName, $record['studio_logo_url'] ?? null);
+        }
+        
+        if ($existingMovie) {
+            // Mettre à jour le film existant
+            $movie = $existingMovie;
+            $stats['updated']++;
+        } else {
+            // Créer un nouveau film
+            $movie = new Movie();
+            $stats['imported']++;
         }
 
         $director = null;
@@ -76,19 +94,24 @@ class DataImportService
             $director = $this->findOrCreateDirector($record['director_firstname'], $record['director_lastname']);
         }
 
-        $movie = new Movie();
         $movie->setTitle($record['title'])
             ->setYear((int) $record['year'])
             ->setPoster($record['poster_url'] ?? $record['poster'] ?? null)
             ->setStudio($studio)
             ->setDirector($director)
             ->setDownloadLink($record['download_link'] ?? null)
-            ->setFormat($record['format'] ?? null)
+            ->setFormat($format)
             ->setFileSize($record['file_size'] ?? null)
             ->setDuration($record['duration'] ?? null);
 
         if (!empty($record['added_at'])) {
             $movie->setAddedAt(new \DateTime($record['added_at']));
+        }
+
+        // Réinitialiser les acteurs et tags pour la mise à jour
+        if ($existingMovie) {
+            $movie->getActors()->clear();
+            $movie->getTags()->clear();
         }
 
         if (!empty($record['actors'])) {
@@ -110,8 +133,9 @@ class DataImportService
             }
         }
 
-        $this->entityManager->persist($movie);
-        $stats['imported']++;
+        if (!$existingMovie) {
+            $this->entityManager->persist($movie);
+        }
     }
 
     public function importStudiosFromCsv(string $csvFilePath, OutputInterface $output): array

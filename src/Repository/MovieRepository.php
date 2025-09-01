@@ -84,6 +84,30 @@ class MovieRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
+    public function findByTitleStudioNameAndFormat(string $title, ?string $studioName, ?string $format): ?Movie
+    {
+        $queryBuilder = $this->createQueryBuilder('m')
+            ->leftJoin('m.studio', 's')
+            ->where('m.title = :title')
+            ->setParameter('title', $title);
+
+        if ($studioName) {
+            $queryBuilder->andWhere('s.name = :studio_name')
+                ->setParameter('studio_name', $studioName);
+        } else {
+            $queryBuilder->andWhere('m.studio IS NULL');
+        }
+
+        if ($format) {
+            $queryBuilder->andWhere('m.format = :format')
+                ->setParameter('format', $format);
+        } else {
+            $queryBuilder->andWhere('m.format IS NULL');
+        }
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return Movie[] Returns an array of Movie objects
     //     */
