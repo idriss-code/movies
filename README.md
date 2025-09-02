@@ -8,9 +8,11 @@ Une application Symfony pour gérer et afficher une collection de films avec des
 - **Détail des films** : Page complète avec informations sur le film, acteurs, réalisateur, studio et tags
 - **Gestion des studios** : Liste et pages détail des studios avec leurs films
 - **Gestion des réalisateurs** : Liste et filmographies des réalisateurs
-- **Gestion des acteurs** : Liste et filmographies des acteurs
+- **Gestion des acteurs** : Liste et filmographies des acteurs  
 - **Recherche** : Recherche globale dans les titres, acteurs, réalisateurs et studios
 - **Import de données** : Commandes console pour importer des données depuis des fichiers CSV
+- **Popup d'avertissement** : Avertissement contenu adulte configurable avec sélecteur de langue
+- **Support multilingue** : Interface disponible en français, anglais et espagnol
 
 ## Structure du projet
 
@@ -108,6 +110,32 @@ php bin/console app:import:studios data/studios.csv
 name,logo_url
 "Marvel Studios","https://example.com/logo.png"
 ```
+
+## Configuration
+
+### Variables d'environnement
+
+#### Popup d'avertissement de contenu adulte
+
+Vous pouvez activer ou désactiver le popup d'avertissement de contenu adulte via le fichier `.env` :
+
+```bash
+# Active le popup d'avertissement (valeur par défaut)
+ADULT_WARNING_ENABLED=true
+
+# Désactive complètement le popup
+ADULT_WARNING_ENABLED=false
+```
+
+**Comportement** :
+- `true` : Le popup s'affiche à la première visite de chaque utilisateur
+- `false` : Le popup ne s'affiche jamais, quelle que soit la situation
+
+**Fonctionnalités du popup** :
+- Sélecteur de langue intégré (français, anglais, espagnol)
+- Changement de langue en temps réel sans rechargement
+- Cookie de 365 jours pour mémoriser l'acceptation
+- Redirection vers la langue choisie lors de la confirmation
 
 ## Utilisation
 

@@ -163,10 +163,13 @@
             document.getElementById('adultWarningConfirm').textContent = trans.understand;
         }
         
+        // Vérifier si le popup est activé via la configuration
+        const isWarningEnabled = {{ adult_warning_enabled ? 'true' : 'false' }};
+        
         // Vérifier si l'utilisateur a déjà vu l'avertissement
         const hasSeenWarning = getCookie('adult_warning_seen');
         
-        if (!hasSeenWarning) {
+        if (isWarningEnabled && !hasSeenWarning) {
             // Afficher le popup si pas encore vu
             const modal = new bootstrap.Modal(document.getElementById('adultWarningModal'));
             modal.show();

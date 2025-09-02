@@ -4,12 +4,23 @@ namespace App\Twig;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\Extension\GlobalsInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class AppExtension extends AbstractExtension
+class AppExtension extends AbstractExtension implements GlobalsInterface
 {
-    public function __construct(private TranslatorInterface $translator)
+    public function __construct(
+        private TranslatorInterface $translator,
+        private ParameterBagInterface $parameterBag
+    ) {
+    }
+
+    public function getGlobals(): array
     {
+        return [
+            'adult_warning_enabled' => $this->parameterBag->get('app.adult_warning_enabled'),
+        ];
     }
 
     public function getFilters(): array
