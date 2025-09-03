@@ -1,0 +1,73 @@
+{# Template partial pour optimiser la pagination SEO #}
+{% macro pagination_with_seo(pagination, route_name, route_params, search_query) %}
+    <style>
+        .seo-pagination .page-link::before,
+        .seo-pagination .page-link::after {
+            content: none !important;
+        }
+        /* Masquer tout élément de pagination généré automatiquement */
+        .pagination:not(.seo-pagination) {
+            display: none !important;
+        }
+    </style>
+    {% set current_page = pagination.getCurrentPageNumber %}
+    {% set total_pages = pagination.getPageCount %}
+    
+    {% if total_pages > 1 %}
+        <nav aria-label="Pagination" class="d-flex justify-content-center">
+            <ul class="pagination pagination-lg seo-pagination">
+                {# Page précédente #}
+                {% if current_page > 1 %}
+                    <li class="page-item">
+                        {% set prev_route = current_page > 2 ? route_name ~ '_paginated' : route_name %}
+                        {% set prev_params = current_page > 2 ? route_params|merge({'page': current_page - 1}) : route_params %}
+                        <a class="page-link" 
+                           href="{{ path(prev_route, prev_params) }}{% if search_query %}?q={{ search_query|url_encode }}{% endif %}"
+                           rel="prev"
+                           aria-label="{{ 'pagination.previous'|trans }}">
+                            <i class="bi bi-chevron-left"></i>
+                            <span class="d-none d-md-inline ms-1">{{ 'pagination.previous'|trans }}</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {# Numéros de pages #}
+                {% set start_page = current_page > 3 ? current_page - 2 : 1 %}
+                {% set end_page = current_page < total_pages - 2 ? current_page + 2 : total_pages %}
+                {% for page in start_page..end_page %}
+                    {% if page == current_page %}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">{{ page }}</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            {% set page_route = page == 1 ? route_name : route_name ~ '_paginated' %}
+                            {% set page_params = page == 1 ? route_params : route_params|merge({'page': page}) %}
+                            <a class="page-link" 
+                               href="{{ path(page_route, page_params) }}{% if search_query %}?q={{ search_query|url_encode }}{% endif %}"
+                               aria-label="Page {{ page }}">{{ page }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {# Page suivante #}
+                {% if current_page < total_pages %}
+                    <li class="page-item">
+                        <a class="page-link" 
+                           href="{{ path(route_name ~ '_paginated', route_params|merge({'page': current_page + 1})) }}{% if search_query %}?q={{ search_query|url_encode }}{% endif %}"
+                           rel="next"
+                           aria-label="{{ 'pagination.next'|trans }}">
+                            <span class="d-none d-md-inline me-1">{{ 'pagination.next'|trans }}</span>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        {# Informations sur la pagination pour l'accessibilité #}
+        <div class="text-center small mt-2" style="color: #6c757d;">
+            {{ 'pagination.info'|trans({'%current%': current_page, '%total%': total_pages, '%count%': pagination.getTotalItemCount}) }}
+        </div>
+    {% endif %}
+{% endmacro %}

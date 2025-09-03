@@ -61,6 +61,8 @@ actor:
 pagination:
   previous: "Anterior"
   next: "Siguiente"
+  page: "Página %page%"
+  info: "Página %current% de %total% (%count% elementos en total)"
 
 language:
   english: "Inglés"

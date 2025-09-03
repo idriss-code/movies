@@ -15,13 +15,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class ActorController extends AbstractController
 {
     #[Route('s', name: 'app_actor_index', methods: ['GET'])]
-    public function index(Request $request, ActorRepository $actorRepository, PaginatorInterface $paginator): Response
+    #[Route('s/page/{page<\\d+>}', name: 'app_actor_index_paginated', methods: ['GET'])]
+    public function index(Request $request, ActorRepository $actorRepository, PaginatorInterface $paginator, int $page = 1): Response
     {
         $query = $actorRepository->findAllWithMovieCount();
 
         $pagination = $paginator->paginate(
             $query,
-            $request->query->getInt('page', 1),
+            $page,
             20
         );
 
@@ -31,13 +32,14 @@ class ActorController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_actor_show', methods: ['GET'])]
-    public function show(Request $request, Actor $actor, MovieRepository $movieRepository, PaginatorInterface $paginator): Response
+    #[Route('/{id}/page/{page<\\d+>}', name: 'app_actor_show_paginated', methods: ['GET'])]
+    public function show(Request $request, Actor $actor, MovieRepository $movieRepository, PaginatorInterface $paginator, int $page = 1): Response
     {
         $query = $movieRepository->findByActorOrderedByAddedAt($actor);
 
         $pagination = $paginator->paginate(
             $query,
-            $request->query->getInt('page', 1),
+            $page,
             12
         );
 

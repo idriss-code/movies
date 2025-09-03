@@ -12,7 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class SearchController extends AbstractController
 {
     #[Route('/search', name: 'app_search')]
-    public function index(Request $request, MovieRepository $movieRepository, PaginatorInterface $paginator): Response
+    #[Route('/search/page/{page<\\d+>}', name: 'app_search_paginated')]
+    public function index(Request $request, MovieRepository $movieRepository, PaginatorInterface $paginator, int $page = 1): Response
     {
         $searchQuery = $request->query->get('q', '');
         $results = [];
@@ -22,7 +23,7 @@ class SearchController extends AbstractController
 
             $results = $paginator->paginate(
                 $query,
-                $request->query->getInt('page', 1),
+                $page,
                 12
             );
         }

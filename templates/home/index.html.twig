@@ -50,8 +50,9 @@
             {% endfor %}
         </div>
 
-        <div class="d-flex justify-content-center mt-4">
-            {{ knp_pagination_render(pagination) }}
+        {% import '_pagination_seo.html.twig' as pagination_seo %}
+        <div class="mt-4">
+            {{ pagination_seo.pagination_with_seo(pagination, 'app_home', {}, null) }}
         </div>
     {% else %}
         <div class="text-center py-5">

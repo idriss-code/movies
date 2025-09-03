@@ -100,8 +100,9 @@
                 {% endfor %}
             </div>
 
-            <div class="d-flex justify-content-center mt-4">
-                {{ knp_pagination_render(results) }}
+            {% import '_pagination_seo.html.twig' as pagination_seo %}
+            <div class="mt-4">
+                {{ pagination_seo.pagination_with_seo(results, 'app_search', {}, search_query) }}
             </div>
         {% else %}
             <div class="no-results-container">

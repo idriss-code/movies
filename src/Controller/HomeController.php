@@ -12,13 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(Request $request, MovieRepository $movieRepository, PaginatorInterface $paginator): Response
+    #[Route('/page/{page<\\d+>}', name: 'app_home_paginated')]
+    public function index(Request $request, MovieRepository $movieRepository, PaginatorInterface $paginator, int $page = 1): Response
     {
         $query = $movieRepository->findAllOrderedByAddedAt();
 
         $pagination = $paginator->paginate(
             $query,
-            $request->query->getInt('page', 1),
+            $page,
             12
         );
 

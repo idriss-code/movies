@@ -86,3 +86,9 @@ language:
     switch_to_fr: "Passer en français"
     switch_to_en: "Switch to English"
     switch_to_es: "Cambiar a español"
+
+pagination:
+    previous: "Précédent"
+    next: "Suivant"
+    page: "Page %page%"
+    info: "Page %current% sur %total% (%count% éléments au total)"
