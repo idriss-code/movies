@@ -108,6 +108,21 @@ class MovieRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
+    public function findOneBySlug(string $slug): ?Movie
+    {
+        return $this->createQueryBuilder('m')
+            ->leftJoin('m.studio', 's')
+            ->addSelect('s')
+            ->leftJoin('m.director', 'd')
+            ->addSelect('d')
+            ->leftJoin('m.actors', 'a')
+            ->addSelect('a')
+            ->where('LOWER(CONCAT(COALESCE(s.name, \'unknown\'), \'-\', COALESCE(m.title, \'untitled\'))) LIKE :slug')
+            ->setParameter('slug', '%' . str_replace('-', '%', $slug) . '%')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return Movie[] Returns an array of Movie objects
     //     */

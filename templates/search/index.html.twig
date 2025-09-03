@@ -83,7 +83,7 @@
                                 
                                 <div class="mt-auto">
                                     <div class="d-flex gap-2">
-                                        <a href="{{ path('app_movie_show', {'id': movie.id}) }}" 
+                                        <a href="{{ path('app_movie_show', {'slug': movie.slug}) }}" 
                                            class="btn btn-primary btn-sm flex-grow-1">{{ 'movie.details'|trans }}</a>
                                         {% if movie.downloadLink %}
                                             <a href="{{ movie.downloadLink }}" 
