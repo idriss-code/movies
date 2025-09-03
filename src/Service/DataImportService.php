@@ -187,73 +187,61 @@ class DataImportService
 
     private function findOrCreateStudio(string $name, ?string $logoUrl = null): Studio
     {
-        try {
-            $studio = $this->studioRepository->findOneByName($name);
-        } catch (\Exception $e) {
-            // Si plusieurs résultats, prendre le premier
-            $studios = $this->studioRepository->findBy(['name' => $name], ['id' => 'ASC'], 1);
-            $studio = $studios ? $studios[0] : null;
-        }
+        // Recherche avec findBy pour éviter les exceptions sur les doublons
+        $studios = $this->studioRepository->findBy(['name' => $name], ['id' => 'ASC'], 1);
+        $studio = $studios ? $studios[0] : null;
         
         if (!$studio) {
             $studio = new Studio();
             $studio->setName($name)->setLogo($logoUrl);
             $this->entityManager->persist($studio);
+            $this->entityManager->flush(); // Flush immédiat pour éviter les doublons
         }
         return $studio;
     }
 
     private function findOrCreateDirector(string $firstName, string $lastName): Director
     {
-        try {
-            $director = $this->directorRepository->findOneByName($firstName, $lastName);
-        } catch (\Exception $e) {
-            // Si plusieurs résultats, prendre le premier
-            $directors = $this->directorRepository->findBy(['firstName' => $firstName, 'lastName' => $lastName], ['id' => 'ASC'], 1);
-            $director = $directors ? $directors[0] : null;
-        }
+        // Recherche avec findBy pour éviter les exceptions sur les doublons
+        $directors = $this->directorRepository->findBy(['firstName' => $firstName, 'lastName' => $lastName], ['id' => 'ASC'], 1);
+        $director = $directors ? $directors[0] : null;
         
         if (!$director) {
             $director = new Director();
             $director->setFirstName($firstName)->setLastName($lastName);
             $this->entityManager->persist($director);
+            $this->entityManager->flush(); // Flush immédiat pour éviter les doublons
         }
         return $director;
     }
 
     private function findOrCreateActor(string $firstName, string $lastName): Actor
     {
-        try {
-            $actor = $this->actorRepository->findOneByName($firstName, $lastName);
-        } catch (\Exception $e) {
-            // Si plusieurs résultats, prendre le premier
-            $actors = $this->actorRepository->findBy(['firstName' => $firstName, 'lastName' => $lastName], ['id' => 'ASC'], 1);
-            $actor = $actors ? $actors[0] : null;
-        }
+        // Recherche avec findBy pour éviter les exceptions sur les doublons
+        $actors = $this->actorRepository->findBy(['firstName' => $firstName, 'lastName' => $lastName], ['id' => 'ASC'], 1);
+        $actor = $actors ? $actors[0] : null;
         
         if (!$actor) {
             $actor = new Actor();
             $actor->setFirstName($firstName)->setLastName($lastName);
             $this->entityManager->persist($actor);
+            $this->entityManager->flush(); // Flush immédiat pour éviter les doublons
         }
         return $actor;
     }
 
     private function findOrCreateTag(string $name): Tag
     {
-        try {
-            $tag = $this->tagRepository->findOneByName($name);
-        } catch (\Exception $e) {
-            // Si plusieurs résultats, prendre le premier
-            $tags = $this->tagRepository->findBy(['name' => $name], ['id' => 'ASC'], 1);
-            $tag = $tags ? $tags[0] : null;
-        }
+        // Recherche avec findBy pour éviter les exceptions sur les doublons
+        $tags = $this->tagRepository->findBy(['name' => $name], ['id' => 'ASC'], 1);
+        $tag = $tags ? $tags[0] : null;
         
         if (!$tag) {
             $colors = ['#dc3545', '#198754', '#0d6efd', '#fd7e14', '#6f42c1', '#20c997', '#ffc107'];
             $tag = new Tag();
             $tag->setName($name)->setColor($colors[array_rand($colors)]);
             $this->entityManager->persist($tag);
+            $this->entityManager->flush(); // Flush immédiat pour éviter les doublons
         }
         return $tag;
     }

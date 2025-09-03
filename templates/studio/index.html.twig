@@ -14,11 +14,19 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="card h-100 studio-card">
                         <div class="card-body text-center">
-                            {% if studio.logo %}
+                            {% if studio.logo and not (studio.logo matches '/wiki/' or studio.logo matches '/fandom/') %}
                                 <img src="{{ studio.logo }}" class="studio-logo mb-3" 
-                                     alt="{{ studio.name }}" loading="lazy">
+                                     alt="{{ studio.name }}" loading="lazy"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="studio-placeholder mb-3" style="display: none;">
+                                    <div class="studio-placeholder-icon">🎬</div>
+                                    <div class="studio-placeholder-text">{{ studio.name|slice(0, 2)|upper }}</div>
+                                </div>
                             {% else %}
-                                <div class="text-muted fs-1 mb-3">🏢</div>
+                                <div class="studio-placeholder mb-3">
+                                    <div class="studio-placeholder-icon">🎬</div>
+                                    <div class="studio-placeholder-text">{{ studio.name|slice(0, 2)|upper }}</div>
+                                </div>
                             {% endif %}
                             
                             <h5 class="card-title">{{ studio.name }}</h5>

@@ -4,8 +4,18 @@
 
 {% block body %}
     <div class="d-flex align-items-center mb-4">
-        {% if studio.logo %}
-            <img src="{{ studio.logo }}" class="studio-logo-large me-3" alt="{{ studio.name }}">
+        {% if studio.logo and not (studio.logo matches '/wiki/' or studio.logo matches '/fandom/') %}
+            <img src="{{ studio.logo }}" class="studio-logo-large me-3" alt="{{ studio.name }}"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="studio-placeholder-large me-3" style="display: none;">
+                <div class="studio-placeholder-icon-large">🎬</div>
+                <div class="studio-placeholder-text-large">{{ studio.name|slice(0, 2)|upper }}</div>
+            </div>
+        {% else %}
+            <div class="studio-placeholder-large me-3">
+                <div class="studio-placeholder-icon-large">🎬</div>
+                <div class="studio-placeholder-text-large">{{ studio.name|slice(0, 2)|upper }}</div>
+            </div>
         {% endif %}
         <div>
             <h1 class="h2 mb-0">{{ studio.name }}</h1>
