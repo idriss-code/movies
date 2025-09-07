@@ -89,7 +89,8 @@ class MovieRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('m')
             ->leftJoin('m.studio', 's')
             ->where('m.title = :title')
-            ->setParameter('title', $title);
+            ->setParameter('title', $title)
+            ->orderBy('m.id', 'ASC'); // Ordre déterministe pour la cohérence
 
         if ($studioName) {
             $queryBuilder->andWhere('s.name = :studio_name')
@@ -105,7 +106,15 @@ class MovieRepository extends ServiceEntityRepository
             $queryBuilder->andWhere('m.format IS NULL');
         }
 
-        return $queryBuilder->getQuery()->getOneOrNullResult();
+        // Utiliser getResult() pour gérer les doublons sans exception
+        $results = $queryBuilder->getQuery()->getResult();
+        
+        if (empty($results)) {
+            return null;
+        }
+        
+        // S'il y a plusieurs résultats, prendre le premier (plus ancien ID)
+        return $results[0];
     }
 
     public function findOneBySlug(string $slug): ?Movie

@@ -45,19 +45,49 @@ class DataImportService
         $progressBar = new ProgressBar($output, count($recordsArray));
         $progressBar->start();
 
-        foreach ($recordsArray as $record) {
+        foreach ($recordsArray as $index => $record) {
             try {
                 $this->processMovieRecord($record, $stats);
                 $progressBar->advance();
             } catch (\Exception $e) {
                 $stats['errors']++;
-                $errors[] = "Erreur ligne {$progressBar->getProgress()}: " . $e->getMessage();
-                $output->writeln("Erreur: " . $e->getMessage());
+                $lineNumber = $index + 2; // +2 car index commence à 0 et on a un header
+                $movieTitle = $record['title'] ?? 'INCONNU';
+                $studioName = $record['studio_name'] ?? 'INCONNU';
+                
+                $errorMsg = "Ligne {$lineNumber} - Film: '{$movieTitle}' (Studio: '{$studioName}') - Erreur: " . $e->getMessage();
+                $errors[] = $errorMsg;
+                
+                $output->writeln("\n[ERREUR] " . $errorMsg);
+                
+                // Afficher les données de la ligne problématique
+                $output->writeln("Données de la ligne:");
+                foreach ($record as $key => $value) {
+                    $displayValue = $value ?? 'NULL';
+                    if (strlen($displayValue) > 80) {
+                        $displayValue = substr($displayValue, 0, 80) . '...';
+                    }
+                    $output->writeln("  {$key}: {$displayValue}");
+                }
+                $output->writeln("");
+                
+                $progressBar->advance();
             }
         }
 
         $progressBar->finish();
-        $this->entityManager->flush();
+        
+        // Flush final avec gestion d'erreur
+        try {
+            if ($this->entityManager->isOpen()) {
+                $this->entityManager->flush();
+            } else {
+                $output->writeln("\n[WARNING] EntityManager était déjà fermé avant le flush final");
+            }
+        } catch (\Exception $e) {
+            $output->writeln("\n[ERROR] Erreur lors du flush final: " . $e->getMessage());
+            $errors[] = "Erreur flush final: " . $e->getMessage();
+        }
 
         return ['stats' => $stats, 'errors' => $errors];
     }
@@ -67,12 +97,22 @@ class DataImportService
         if (empty($record['title'])) {
             throw new \InvalidArgumentException('Le titre du film est requis');
         }
+        
+        // Vérifier la longueur du download_link
+        $downloadLink = $record['download_link'] ?? '';
+        if (strlen($downloadLink) > 2048) {
+            $stats['skipped']++;
+            throw new \InvalidArgumentException("Film '{$record['title']}' ignoré : download_link trop long (" . strlen($downloadLink) . " caractères, limite 2048)");
+        }
 
         $studioName = !empty($record['studio_name']) ? $record['studio_name'] : null;
         $format = $record['format'] ?? null;
         
         // Vérifier si un film avec le même titre, studio et format existe déjà
         $existingMovie = $this->movieRepository->findByTitleStudioNameAndFormat($record['title'], $studioName, $format);
+        
+        // Détecter et logger les doublons potentiels
+        $this->checkForDuplicates($record['title'], $studioName, $format);
         
         $studio = null;
         if ($studioName) {
@@ -244,5 +284,35 @@ class DataImportService
             $this->entityManager->flush(); // Flush immédiat pour éviter les doublons
         }
         return $tag;
+    }
+    
+    private function checkForDuplicates(string $title, ?string $studioName, ?string $format): void
+    {
+        // Créer une requête pour compter les films avec les mêmes critères
+        $queryBuilder = $this->movieRepository->createQueryBuilder('m')
+            ->select('COUNT(m.id)')
+            ->leftJoin('m.studio', 's')
+            ->where('m.title = :title')
+            ->setParameter('title', $title);
+
+        if ($studioName) {
+            $queryBuilder->andWhere('s.name = :studio_name')
+                ->setParameter('studio_name', $studioName);
+        } else {
+            $queryBuilder->andWhere('m.studio IS NULL');
+        }
+
+        if ($format) {
+            $queryBuilder->andWhere('m.format = :format')
+                ->setParameter('format', $format);
+        } else {
+            $queryBuilder->andWhere('m.format IS NULL');
+        }
+
+        $count = $queryBuilder->getQuery()->getSingleScalarResult();
+        
+        if ($count > 1) {
+            error_log("[DUPLICATE DETECTED] Film: '{$title}' (Studio: '{$studioName}', Format: '{$format}') - {$count} exemplaires trouvés en base");
+        }
     }
 }
